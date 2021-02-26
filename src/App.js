@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const developers = ['Azizul Islam Milton','Morsadur Zaman','Jahidul Islam','Shafiur Islam'];
@@ -18,6 +18,7 @@ function App() {
       <header className="App-header">
         <h2>I am a Beginner React Developer</h2>
         <Counter></Counter>
+        <Users></Users>
         <ul>
             {
               developers.map(developer => <li>{developer}</li>)
@@ -36,6 +37,26 @@ function App() {
       </header>
     </div>
   );
+}
+
+
+function Users(){
+  const [users, setUsers] = useState([]);
+  useEffect(()=>{
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res => res.json())
+    .then(data =>setUsers(data));
+  },[])
+  return(
+    <div>
+      <h2>Dynamic Users: {users.length}</h2>
+      <ul>
+        {
+          users.map(user => <li>{user.name} Phone:{user.phone}</li>)
+        }
+      </ul>
+    </div>
+  )
 }
 
 function Counter(){
